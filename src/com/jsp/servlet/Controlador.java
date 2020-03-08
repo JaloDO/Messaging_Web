@@ -46,6 +46,7 @@ public class Controlador extends HttpServlet {
      */
     public Controlador() {
         super();
+        
         // TODO Auto-generated constructor stub
     }
 
@@ -54,7 +55,7 @@ public class Controlador extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 		
 		HttpSession sesion = request.getSession();
 		String accion = request.getParameter("accion");
@@ -65,12 +66,17 @@ public class Controlador extends HttpServlet {
 			u = new Usuario();
 			u.setNombre(request.getParameter("username"));
 			u.setPassword(request.getParameter("password"));
+			System.out.println("No llega al metodo");
 			u = chat.iniciarSesion(u);
+			System.out.println("Pasa de chat iniciar sesion");
 			if(u!=null) {
+				System.out.println("No es nulo");
 				sesion.setAttribute("usuario", u);
-				//redirect to libros.jsp
+				
 				RequestDispatcher pagina = request.getRequestDispatcher("chat.jsp");
 				pagina.forward(request, response);
+			}else {
+				System.out.println("No coje el usuario");
 			}
 			break;
 		}

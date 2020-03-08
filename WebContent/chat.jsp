@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@page import="java.util.List" %>
+    <%@page import="Modelo.Mensaje" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +11,7 @@
   <link href="https://augustobrigadaw.000webhostapp.com/resources2/bootstrap.css" rel="stylesheet">
 <!-- Custom styles for this template -->
   <link href="https://augustobrigadaw.000webhostapp.com/resources2/css/shop-homepage.css" rel="stylesheet">
+  
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -38,11 +41,34 @@
         <div class="container">
             <div id="chat-row" class="row justify-content-center align-items-center">
                 <div id="chat-column" class="col-md-6">
-                    <div id="chat-box" class="col-md-12">
+                    <div id="chat-box" class="col-md-12" 
+                    style="position:relative;height:200px;overflow:auto;display:block;">
                         <form id="chat-form" class="form" action="chat" method="post">        
-                           
+                           <table class="table table-hover table-striped" caption="titulo de la tabla">
+  						   	<thead>
+    							<tr>
+      								<th scope="col">ID</th>
+      								<th scope="col">Autor</th>
+     								<th scope="col">Contenido</th>
+     								<th scope="col">Fecha</th>
+    							</tr>
+  							 </thead>
+  							 <tbody>
+    							<%
+    							List<Mensaje> listaMensajes =(List<Mensaje>) request.getAttribute("mensajes");
+    							for(Mensaje m : listaMensajes){
+    							%>
+    							<tr>
+    								<td><%=m.getCodigo()%></td>
+    								<td><%=m.getEmisor()%></td>
+    								<td><%=m.getContenido()%></td>
+    								<td><%=m.getFecha()%></td>
+    							</tr>
+    							<%}%>
+    							</tr>
+  							 </tbody>
+							</table>
                         </form>
-                        
                     </div>
                 </div>
             </div>
