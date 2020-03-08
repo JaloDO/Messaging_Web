@@ -3,15 +3,14 @@
   <groupId>Messaging_Web</groupId>
   <artifactId>Messaging_Web</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <build>
+   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <release>12</release>
         </configuration>
       </plugin>
       <plugin>
@@ -23,12 +22,18 @@
       </plugin>
     </plugins>
   </build>
+  
   <dependencies>
-  <dependency>
-    <groupId>commons-digester</groupId>
-    <artifactId>commons-digester</artifactId>
-    <version>2.1</version>
+  
+  <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>4.0.1</version>
+    <scope>provided</scope>
 </dependency>
+  
+  
   	<dependency>
 	  	<groupId>org.hibernate</groupId>
 	  	<artifactId>hibernate-agroal</artifactId>
@@ -44,44 +49,5 @@
 		<version>8.0.17</version>
 	</dependency>
   
-  <!-- @Inject -->
-		<dependency>
-			<groupId>javax.inject</groupId>
-			<artifactId>javax.inject</artifactId>
-			<version>1</version>
-		</dependency>
-				
-		<!-- Servlet -->
-		<!-- https://mvnrepository.com/artifact/javax/servlet -->
-
-		<!-- https://mvnrepository.com/artifact/javax/servlet -->
-<dependency>
-    <groupId>javax.servlet</groupId>
-    <artifactId>javax.servlet-api</artifactId>
-    <version>4.0.1</version>
-    <scope>provided</scope>
-</dependency>
-
-		
-		<dependency>
-<groupId>javax.mail</groupId>
-<artifactId>javax.mail-api</artifactId>
-<version>1.5.5</version>
-</dependency>
-<dependency>
-<groupId>javax.mail</groupId>
-<artifactId>mail</artifactId>
-<version>1.4.7</version>
-</dependency>
-<dependency>
-<groupId>commons-fileupload</groupId>
-<artifactId>commons-fileupload</artifactId>
-<version>1.4</version>
-</dependency>
-<dependency>
-<groupId>commons-io</groupId>
-<artifactId>commons-io</artifactId>
-<version>2.5</version>
-</dependency>
   </dependencies>
 </project>
