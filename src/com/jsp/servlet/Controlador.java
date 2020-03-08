@@ -65,7 +65,9 @@ public class Controlador extends HttpServlet {
 			u = new Usuario();
 			u.setNombre(request.getParameter("username"));
 			u.setPassword(request.getParameter("password"));
+			System.out.println(u.getNombre()+u.getPassword());
 			u = chat.iniciarSesion(u);
+			System.out.println(u.toString());
 			if(u!=null) {
 				sesion.setAttribute("usuario", u);
 				//redirect to libros.jsp
