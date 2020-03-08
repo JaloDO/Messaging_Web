@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
     <%@page import="java.util.List" %>
     <%@page import="Modelo.Mensaje" %>
+    <%@page import="Modelo.Usuario" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,7 @@
   <link href="https://augustobrigadaw.000webhostapp.com/resources2/css/shop-homepage.css" rel="stylesheet">
   
 </head>
-<body>
+<body style="background-color:#c9c8c5;">
 	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
       
@@ -37,14 +38,13 @@
   
   <div id="general_container" style="position:relative;">
    <div id="CHAT" style="min-height:85vh;">
-        <h3 class="text-center text-black pt-5"> <br/>CHAT<br/></h3>
+        <h3 class="text-center text-black pt-5">CHAT</h3>
         <div class="container">
             <div id="chat-row" class="row justify-content-center align-items-center">
-                <div id="chat-column" class="col-md-6">
                     <div id="chat-box" class="col-md-12" 
-                    style="position:relative;height:200px;overflow:auto;display:block;">
+                    style="position:relative;height:500px;overflow:auto;display:block;">
                         <form id="chat-form" class="form" action="chat" method="post">        
-                           <table class="table table-hover table-striped" caption="titulo de la tabla">
+                           <table class="table table-hover table-striped table-light" caption="titulo de la tabla">
   						   	<thead>
     							<tr>
       								<th scope="col">ID</th>
@@ -60,7 +60,7 @@
     							%>
     							<tr>
     								<td><%=m.getCodigo()%></td>
-    								<td><%=m.getEmisor()%></td>
+    								<td><%=m.getEmisor().getNombre()%></td>
     								<td><%=m.getContenido()%></td>
     								<td><%=m.getFecha()%></td>
     							</tr>
@@ -70,7 +70,6 @@
 							</table>
                         </form>
                     </div>
-                </div>
             </div>
         </div>
     </div>
