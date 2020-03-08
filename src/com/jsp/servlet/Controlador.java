@@ -1,6 +1,7 @@
 package com.jsp.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Modelo.Conector;
+import Modelo.Mensaje;
 import Modelo.Usuario;
 
 
@@ -30,7 +32,6 @@ public class Controlador extends HttpServlet {
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		super.init();
-		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			chat = new Conector();
@@ -38,6 +39,7 @@ public class Controlador extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 	}
 
@@ -59,7 +61,7 @@ public class Controlador extends HttpServlet {
 		HttpSession sesion = request.getSession();
 		String accion = request.getParameter("accion");
 		Usuario u;
-		
+		List<Mensaje> mensajes;
 		switch(accion) {
 		case "Login":
 			u = new Usuario();
@@ -70,7 +72,9 @@ public class Controlador extends HttpServlet {
 			System.out.println(u.toString());
 			if(u!=null) {
 				sesion.setAttribute("usuario", u);
-				//redirect to libros.jsp
+				//redirect to chat.jsp
+				mensajes = chat.mensajesRecibidos(u);
+				request.setAttribute("mensajes", mensajes);
 				RequestDispatcher pagina = request.getRequestDispatcher("chat.jsp");
 				pagina.forward(request, response);
 			}
