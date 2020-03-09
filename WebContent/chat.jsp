@@ -13,6 +13,7 @@
 <!-- Custom styles for this template -->
   <link href="https://augustobrigadaw.000webhostapp.com/resources2/css/shop-homepage.css" rel="stylesheet">
   
+  <%Boolean tipo = (Boolean) request.getAttribute("tipo"); %>
 </head>
 <body style="background-color:#c9c8c5;">
 	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -36,14 +37,25 @@
     </div>
   </nav>
   
-  <div id="general_container" style="position:relative;">
-   <div id="CHAT" style="min-height:85vh;">
-        <h3 class="text-center text-black pt-5">CHAT</h3>
-        <div class="container justify-content-center">
-               <form id="chat-form"  action="Controlador" method="post"> 
-                        <div id="chat-box" style="position:relative;max-height:500px;overflow:auto;display:block;">       
+  <div id="panel_general" style="position:relative;">
+   <div id="panel_contenido" style="min-height:85vh;">
+        <h3 class="text-center text-black pt-4">Bandeja de <% if(tipo){ %>SALIDA<% }else{ %>ENTRADA<% } %></h3>
+        <div id="div_formulario">
+               <form id="chat"  action="Controlador" method="post">
+               	<div id="menu_izquierda" class="col-lg-3" style="float:left;">
+               	<p><b>aqui quiero hacer un div no muy grande que quede a la izquierda</b></p>
+               	<div id="boton">
+							<% if(tipo){ %>
+								<input type="submit" name="accion" value="Recibidos" class="btn btn-dark btn-md" >
+							<% }else{ %>
+								<input type="submit" name="accion" value="Enviados" class="btn btn-dark btn-md" >
+							<% } %>
+				</div>
+               	</div>
+                	<div id="tabla"  class="containter justify-content-center" 
+                		style="position:relative;max-height:550px;overflow:auto;display:block;">       
                            <table class="table table-hover table-striped table-light" caption="titulo de la tabla">
-                           <% Boolean tipo = (Boolean) request.getAttribute("tipo"); 
+                           <%  
                            		if(tipo){
                            %>
   						   	<thead>
@@ -94,13 +106,8 @@
   							 </tbody>
   							 <% }//cierre del else %>
 							</table>
-							</div>
-							<% if(tipo){ %>
-								<input type="submit" name="accion" value="Recibidos" class="btn btn-dark btn-md" >
-							<% }else{ %>
-								<input type="submit" name="accion" value="Enviados" class="btn btn-dark btn-md" >
-							<% } %>
-							
+					</div>
+								
             </form> 
         </div>
     </div>
