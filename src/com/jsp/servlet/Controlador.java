@@ -62,51 +62,49 @@ public class Controlador extends HttpServlet {
 		HttpSession sesion = request.getSession();
 		String accion = request.getParameter("accion");
 		Usuario u;
-		//false para recibidos, true para enviados
-		Boolean tipoMensaje;
-		List<Mensaje> mensajes;
-		RequestDispatcher pagina;
+		Mensaje m;
 		
 		switch(accion) {
 		case "Login":
 			u = new Usuario();
 			u.setNombre(request.getParameter("username"));
 			u.setPassword(request.getParameter("password"));
-			System.out.println("No llega al metodo");
-			System.out.println(u.getNombre()+u.getPassword());
 			u = chat.iniciarSesion(u);
-			System.out.println(u.toString());
-			System.out.println("Pasa de chat iniciar sesion");
 			if(u!=null) {
-				System.out.println("No es nulo");
 				sesion.setAttribute("usuario", u);
-				tipoMensaje = false;
-				mensajes = chat.mensajesRecibidos(u);
-				request.setAttribute("mensajes", mensajes);
-				request.setAttribute("tipo", tipoMensaje);
-				pagina = request.getRequestDispatcher("chat.jsp");
-				pagina.forward(request, response);
+				//false para recibidos, true para enviados
+				mostrarMensajes(request, response, false, u);
 			}else {
 				System.out.println("No coje el usuario");
 			}
 			break;
 		case "Enviados":
 			u = (Usuario) sesion.getAttribute("usuario");
-			tipoMensaje = true;
-			mensajes = chat.mensajesEnviados(u);
-			request.setAttribute("mensajes", mensajes);
-			request.setAttribute("tipo", tipoMensaje);
-			pagina = request.getRequestDispatcher("chat.jsp");
-			pagina.forward(request, response);
+			mostrarMensajes(request, response, true, u);
 			break;
 		case "Recibidos":
 			u = (Usuario) sesion.getAttribute("usuario");
-			tipoMensaje = false;
-			mensajes = chat.mensajesRecibidos(u);
-			request.setAttribute("mensajes", mensajes);
-			request.setAttribute("tipo", tipoMensaje);
-			pagina = request.getRequestDispatcher("chat.jsp");
-			pagina.forward(request, response);
+			mostrarMensajes(request, response, false, u);
+			break;
+		case "Borrar":
+			int id = Integer.parseInt(request.getParameter("idMensaje"));
+			//int id = Integer.parseInt(request.getContextPath());
+			System.out.println("ID: " + id);
+			/*
+			u = (Usuario) sesion.getAttribute("usuario");
+			m = chat.existeMensaje(Integer.parseInt(request.getParameter("idMensaje")));
+			if(m!=null) {
+				if(chat.borrarMensaje(m)) {
+					mostrarMensajes(request, response, true, u);
+				}
+				else {
+					System.out.println("No ha borrado el mensaje");
+				}
+			}
+			else {
+				System.out.println("No ha encontrado el mensaje");
+			} */
+			
 			break;
 		}
 		
@@ -119,6 +117,30 @@ public class Controlador extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+	
+	private void mostrarMensajes(HttpServletRequest request, HttpServletResponse response, Boolean tipoMensaje, Usuario usuario){
+		
+		try {
+			//false para recibidos, true para enviados
+			List<Mensaje> mensajes;
+			if(tipoMensaje) {
+				mensajes = chat.mensajesEnviados(usuario);
+			}
+			else {
+				mensajes = chat.mensajesRecibidos(usuario);
+			}
+			request.setAttribute("mensajes", mensajes);
+			request.setAttribute("tipo", tipoMensaje);
+			RequestDispatcher pagina = request.getRequestDispatcher("chat.jsp");
+			pagina.forward(request, response);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
