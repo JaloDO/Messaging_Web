@@ -40,7 +40,7 @@
   <div id="panel_general" style="position:relative;">
    <div id="panel_contenido" style="min-height:85vh;">
         <h3 class="text-center text-black pt-4">Bandeja de <% if(tipo){ %>SALIDA<% }else{ %>ENTRADA<% } %></h3>
-        <div id="div_formulario">
+        <div id="div_formulario1">
                <form id="chat"  action="Controlador" method="post">
                	<div id="menu_izquierda" class="col-lg-3" style="float:left;">
                	<p><b>aqui quiero hacer un div no muy grande que quede a la izquierda</b></p>
@@ -110,6 +110,14 @@
 								
             </form> 
         </div>
+    	<div id="div_formulario2">
+    		<form id="chat"  action="Controlador" method="post">
+    			<div class="containter justify-content-center">
+    				
+    				<input type="submit" name="accion" value="enviarMensaje" class="btn btn-dark btn-md" >
+    			</div>
+    		</form>
+    	</div>
     </div>
 	<!-- Footer -->
   <footer class="py-4 bg-light" style="position:relative;width:100%;bottom:0;">
