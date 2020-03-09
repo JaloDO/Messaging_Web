@@ -62,7 +62,11 @@ public class Controlador extends HttpServlet {
 		HttpSession sesion = request.getSession();
 		String accion = request.getParameter("accion");
 		Usuario u;
+		//false para recibidos, true para enviados
+		Boolean tipoMensaje;
 		List<Mensaje> mensajes;
+		RequestDispatcher pagina;
+		
 		switch(accion) {
 		case "Login":
 			u = new Usuario();
@@ -76,14 +80,33 @@ public class Controlador extends HttpServlet {
 			if(u!=null) {
 				System.out.println("No es nulo");
 				sesion.setAttribute("usuario", u);
-				
+				tipoMensaje = false;
 				mensajes = chat.mensajesRecibidos(u);
 				request.setAttribute("mensajes", mensajes);
-				RequestDispatcher pagina = request.getRequestDispatcher("chat.jsp");
+				request.setAttribute("tipo", tipoMensaje);
+				pagina = request.getRequestDispatcher("chat.jsp");
 				pagina.forward(request, response);
 			}else {
 				System.out.println("No coje el usuario");
 			}
+			break;
+		case "Enviados":
+			u = (Usuario) sesion.getAttribute("usuario");
+			tipoMensaje = true;
+			mensajes = chat.mensajesEnviados(u);
+			request.setAttribute("mensajes", mensajes);
+			request.setAttribute("tipo", tipoMensaje);
+			pagina = request.getRequestDispatcher("chat.jsp");
+			pagina.forward(request, response);
+			break;
+		case "Recibidos":
+			u = (Usuario) sesion.getAttribute("usuario");
+			tipoMensaje = false;
+			mensajes = chat.mensajesRecibidos(u);
+			request.setAttribute("mensajes", mensajes);
+			request.setAttribute("tipo", tipoMensaje);
+			pagina = request.getRequestDispatcher("chat.jsp");
+			pagina.forward(request, response);
 			break;
 		}
 		

@@ -43,9 +43,37 @@
             <div id="chat-row" class="row justify-content-center align-items-center">
                     <div id="chat-box" class="col-md-12" 
                     style="position:relative;height:500px;overflow:auto;display:block;">
-                        <form id="chat-form" class="form" action="chat" method="post">        
+                        <form id="chat-form" class="form" action="Controlador" method="post">        
                            <table class="table table-hover table-striped table-light" caption="titulo de la tabla">
+                           <% Boolean tipo = (Boolean) request.getAttribute("tipo"); 
+                           		if(tipo){
+                           %>
   						   	<thead>
+    							<tr>
+      								<th scope="col">ID</th>
+      								<th scope="col">Destinatario</th>
+     								<th scope="col">Contenido</th>
+     								<th scope="col">Fecha</th>
+    							</tr>
+  							 </thead>
+  							 <tbody>
+    							<%
+    							List<Mensaje> listaMensajes =(List<Mensaje>) request.getAttribute("mensajes");
+    							for(Mensaje m : listaMensajes){
+    							%>
+    							<tr>
+    								<td><%=m.getCodigo()%></td>
+    								<td><%=m.getReceptor().getNombre()%></td>
+    								<td><%=m.getContenido()%></td>
+    								<td><%=m.getFecha()%></td>
+    								<td><input type="submit" name="accion" value="Borrar" ></td>
+    							</tr>
+    							<%}%>
+  							 </tbody>
+  							 <% //cierre del if
+  							 	}
+                           		else{ %>
+                           	<thead>
     							<tr>
       								<th scope="col">ID</th>
       								<th scope="col">Autor</th>
@@ -65,9 +93,16 @@
     								<td><%=m.getFecha()%></td>
     							</tr>
     							<%}%>
-    							</tr>
   							 </tbody>
+  							 <% }//cierre del else %>
 							</table>
+							
+							<% if(tipo){ %>
+								<input type="submit" name="accion" value="Recibidos" class="btn btn-dark btn-md" >
+							<% }else{ %>
+								<input type="submit" name="accion" value="Enviados" class="btn btn-dark btn-md" >
+							<% } %>
+							
                         </form>
                     </div>
             </div>
