@@ -39,11 +39,9 @@
   <div id="general_container" style="position:relative;">
    <div id="CHAT" style="min-height:85vh;">
         <h3 class="text-center text-black pt-5">CHAT</h3>
-        <div class="container">
-            <div id="chat-row" class="row justify-content-center align-items-center">
-                    <div id="chat-box" class="col-md-12" 
-                    style="position:relative;height:500px;overflow:auto;display:block;">
-                        <form id="chat-form" class="form" action="Controlador" method="post">        
+        <div class="container justify-content-center">
+               <form id="chat-form"  action="Controlador" method="post"> 
+                        <div id="chat-box" style="position:relative;max-height:500px;overflow:auto;display:block;">       
                            <table class="table table-hover table-striped table-light" caption="titulo de la tabla">
                            <% Boolean tipo = (Boolean) request.getAttribute("tipo"); 
                            		if(tipo){
@@ -96,16 +94,14 @@
   							 </tbody>
   							 <% }//cierre del else %>
 							</table>
-							
+							</div>
 							<% if(tipo){ %>
 								<input type="submit" name="accion" value="Recibidos" class="btn btn-dark btn-md" >
 							<% }else{ %>
 								<input type="submit" name="accion" value="Enviados" class="btn btn-dark btn-md" >
 							<% } %>
 							
-                        </form>
-                    </div>
-            </div>
+            </form> 
         </div>
     </div>
 	<!-- Footer -->
