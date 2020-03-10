@@ -55,7 +55,7 @@
                             </div>
                             <div class="form-group text-center">
                                
-                                <a href="/Fruteria-ADO/signUp" class="badge badge-pill badge-dark" value="ir a registro">Todav�a no tengo cuenta</a>
+                                <a href="/Fruteria-ADO/signUp" class="badge badge-pill badge-dark" value="registro">Todavia no tengo cuenta</a>
                             </div>
                         </form>
                         
