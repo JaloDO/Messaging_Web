@@ -20,8 +20,6 @@
     </div>
   </nav>
 
-
-
 <div id="general_container" style="position:relative;">
    <div id="login" style="min-height:85vh;">
         <h3 class="text-center text-black pt-5"> <br/>LOGIN<br/></h3>
@@ -38,6 +36,9 @@
                                 <label for="password" class="badge badge-dark">Password:</label><br>
                                 <input type="password" id="password" name="password"  class="form-control"/> 
                             </div>
+                           <%if(request.getAttribute("error")!=null) { %>
+                            	<label style="color:red" ><%=request.getAttribute("error") %></label>
+                            	<% } %>
                             <div class="form-group text-center">
                                
                                 <input type="submit" name="accion" value="Login" class="btn btn-dark btn-md" >

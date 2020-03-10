@@ -64,8 +64,8 @@
                                 <input type="submit" name="accion" value="Modificar" class="btn btn-dark btn-md" >
                             </div>
                             <div class="form-group">
-                            	<%if(request.getParameter("error")!=null) { %>
-                            	<label><%=request.getParameter("error") %></label>
+                            	<%if(request.getAttribute("error")!=null) { %>
+                            	<label style="color:red" ><%=request.getAttribute("error") %></label>
                             	<% } %>
                             </div>
                         </form>

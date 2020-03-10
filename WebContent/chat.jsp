@@ -151,6 +151,9 @@
   							 </tbody>
   							 <% }//cierre del else %>
 							</table>
+							<%if(request.getAttribute("error2")!=null) { %>
+                            	<label style="color:red"><%=request.getAttribute("error2") %></label>
+                            	<% } %>
 					</div>
 								
             </form> 
@@ -164,6 +167,9 @@
                     <label for="contenido" class="badge badge-light">Mensaje:</label>
                     <input type="text" id="contenido" name="contenido" placeholder="contenido" class="form-control"/>
                     <br />
+                    <%if(request.getAttribute("error")!=null) { %>
+                            	<label style="color:red" ><%=request.getAttribute("error") %></label>
+                            	<% } %>
     				<input type="submit" name="accion" value="Enviar" class="btn btn-light btn-sm" >
     				<button type="button" class="close" aria-label="Close">
   						<span aria-hidden="true">&times;</span>
