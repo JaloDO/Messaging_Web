@@ -117,19 +117,25 @@ public class Controlador extends HttpServlet {
 		case "Enviar":
 			m = new Mensaje();
 			u = (Usuario) sesion.getAttribute("usuario");
-			m.setContenido(request.getParameter("contenido"));
-			Usuario destino = new Usuario();
-			destino.setNombre(request.getParameter("nombre"));
-			destino = chat.obtenerDestinatario(destino);
-			System.out.println("Usuario destino: "+destino.toString());
-			if(destino!=null){
-				m.setEmisor(u);
-				m.setReceptor(destino);
-				m.setFecha(new Date());
-				chat.enviarMensaje(m);
-				cargarChat(request, response, false, u);
+			String contenido = request.getParameter("contenido");
+			String nombre = request.getParameter("nombre");
+			if(!contenido.isBlank() || !nombre.isBlank()) {
+				m.setContenido(contenido);
+				Usuario destino = new Usuario();
+				destino.setNombre(nombre);
+				destino = chat.obtenerDestinatario(destino);
+				System.out.println("Usuario destino: "+destino.toString());
+				
+				if(destino!=null){
+					m.setEmisor(u);
+					m.setReceptor(destino);
+					m.setFecha(new Date());
+					chat.enviarMensaje(m);
+					cargarChat(request, response, false, u);
+				}
+				break;
 			}
-			break;
+			
 
 		case "Nuevo Mensaje":
 			u = (Usuario) sesion.getAttribute("usuario");
