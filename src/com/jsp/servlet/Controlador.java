@@ -78,7 +78,10 @@ public class Controlador extends HttpServlet {
 				//false para recibidos, true para enviados
 				cargarChat(request, response, false, u);
 			}else {
+				request.setAttribute("error", "Datos de inicio de sesión incorrectos");
 				System.out.println("No coje el usuario");
+				pagina = request.getRequestDispatcher("index.jsp");
+				pagina.forward(request, response);
 			}
 			break;
 		case "Enviados":
@@ -105,15 +108,18 @@ public class Controlador extends HttpServlet {
 			m = chat.existeMensaje(Integer.parseInt(request.getParameter("idMensaje")));
 			if(m!=null) {
 				if(chat.borrarMensaje(m)) {
-					cargarChat(request, response, true, u);
+					System.out.println("Mensaje borrado");
 				}
 				else {
 					System.out.println("No ha borrado el mensaje");
+					request.setAttribute("error2", "Error al borrar mensaje");
 				}
 			}
 			else {
 				System.out.println("No ha encontrado el mensaje");
-			} 
+				request.setAttribute("error2", "Error al borrar mensaje");
+			}
+			cargarChat(request, response, true, u);
 			break;
 
 		case "Nuevo Mensaje":
@@ -141,19 +147,22 @@ public class Controlador extends HttpServlet {
 						//recargar usuario
 						u = chat.iniciarSesion(u);
 						sesion.setAttribute("usuario", u);
-						cargarChat(request, response, true, u);
 					}
 					else {
 						System.out.println("No ha enviado el mensaje");
+						request.setAttribute("error", "Error al enviar mensaje");
 					}
 				}
 				else {
 					System.out.println("No ha encontrado el usuario");
+					request.setAttribute("error", "No se ha encontrado el usuario");
 				}
 			}
 			else {
-				cargarChat(request, response, true, u);
+				System.out.println("Campos vacios");
+				request.setAttribute("error", "No puede haber campos vacíos");
 			}
+			cargarChat(request, response, true, u);
 			
 			break;
 			
@@ -177,9 +186,10 @@ public class Controlador extends HttpServlet {
 					u.setPassword(p1);
 					if(chat.modificarUsuario(u)) {
 						System.out.println("modificar contraseña");
+						u = chat.iniciarSesion(u);
 						sesion.setAttribute("usuario", u);
-						pagina = request.getRequestDispatcher("modificar.jsp");
-						pagina.forward(request, response);
+						//pagina = request.getRequestDispatcher("modificar.jsp");
+						//pagina.forward(request, response);
 					}
 					else {
 						request.setAttribute("error", "Error al modificar el usuario");
