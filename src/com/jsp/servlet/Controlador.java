@@ -103,7 +103,7 @@ public class Controlador extends HttpServlet {
 			m = chat.existeMensaje(Integer.parseInt(request.getParameter("idMensaje")));
 			if(m!=null) {
 				if(chat.borrarMensaje(m)) {
-					mostrarMensajes(request, response, true, u);
+					cargarChat(request, response, true, u);
 				}
 				else {
 					System.out.println("No ha borrado el mensaje");
@@ -111,7 +111,7 @@ public class Controlador extends HttpServlet {
 			}
 			else {
 				System.out.println("No ha encontrado el mensaje");
-			} */
+			} 
 			break;
 		
 		case "Enviar":
@@ -138,7 +138,7 @@ public class Controlador extends HttpServlet {
 			cargarChat(request, response, true, u);
 			break;
 
-		case "Enviar":
+		/*case "Enviar":
 			u = (Usuario) sesion.getAttribute("usuario");
 			String contenido = request.getParameter("contenido");
 			String nombre = request.getParameter("nombre");
@@ -162,7 +162,7 @@ public class Controlador extends HttpServlet {
 			else {
 				System.out.println("No ha encontrado el usuario");
 			}
-			break;
+			break;*/
 		}
 		
 		
