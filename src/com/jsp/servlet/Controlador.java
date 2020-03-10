@@ -73,6 +73,7 @@ public class Controlador extends HttpServlet {
 			u = chat.iniciarSesion(u);
 			if(u!=null) {
 				sesion.setAttribute("usuario", u);
+				request.setAttribute("usuario", u);
 				//false para recibidos, true para enviados
 				cargarChat(request, response, false, u);
 			}else {
@@ -114,7 +115,7 @@ public class Controlador extends HttpServlet {
 			} 
 			break;
 		
-		case "Enviar":
+		/*case "Enviar":
 			m = new Mensaje();
 			u = (Usuario) sesion.getAttribute("usuario");
 			m.setContenido(request.getParameter("contenido"));
@@ -129,16 +130,15 @@ public class Controlador extends HttpServlet {
 				chat.enviarMensaje(m);
 				cargarChat(request, response, false, u);
 			}
-			break;
+			break;*/
 
 		case "Nuevo Mensaje":
 			u = (Usuario) sesion.getAttribute("usuario");
 			request.setAttribute("nombre", request.getParameter("selectNombre"));
-			System.out.println("nombre: "+request.getParameter("selectNombre"));
 			cargarChat(request, response, true, u);
 			break;
 
-		/*case "Enviar":
+		case "Enviar":
 			u = (Usuario) sesion.getAttribute("usuario");
 			String contenido = request.getParameter("contenido");
 			String nombre = request.getParameter("nombre");
@@ -153,6 +153,8 @@ public class Controlador extends HttpServlet {
 				m.setContenido(contenido);
 				m.setFecha(new Date());
 				if(chat.enviarMensaje(m)) {
+					//recargar usuario
+					u = chat.iniciarSesion(u);
 					cargarChat(request, response, true, u);
 				}
 				else {
@@ -162,7 +164,7 @@ public class Controlador extends HttpServlet {
 			else {
 				System.out.println("No ha encontrado el usuario");
 			}
-			break;*/
+			break;
 		}
 		
 		
