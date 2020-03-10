@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@page import="java.util.List" %>
+    <%@page import="java.util.ArrayList" %>
     <%@page import="Modelo.Mensaje" %>
     <%@page import="Modelo.Usuario" %>
 <!DOCTYPE html>
@@ -12,14 +13,34 @@
   <link href="https://augustobrigadaw.000webhostapp.com/resources2/bootstrap.css" rel="stylesheet">
 <!-- Custom styles for this template -->
   <link href="https://augustobrigadaw.000webhostapp.com/resources2/css/shop-homepage.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  
+
   
   <%Boolean tipo = (Boolean) request.getAttribute("tipo");
   	request.setAttribute("nombre","nombre");
   	%>
+ <%
+  	boolean match = false;
+ 	List<String>contactos = new ArrayList<String>();
+
+  	Usuario user = (Usuario) session.getAttribute("usuario");
+  	List<Mensaje>enviados = user.getEnviados();
+  	for (Mensaje m: enviados){
+  		if(contactos.isEmpty()){
+  			contactos.add(m.getReceptor().getNombre());
+  		}
+  		else{
+  			match = false;
+			for(int i=0;i<contactos.size();i++){
+				if(contactos.get(i).equals(m.getReceptor().getNombre())){
+					match = true;
+				}
+			}
+			if(!match){
+				contactos.add(m.getReceptor().getNombre());
+			}
+  		}
+  	}
+  %>
 
 </head>
 <body style="background-color:#c9c8c5;">
@@ -64,8 +85,9 @@
 				
 				<select id="selectNombre" name="selectNombre" class="form-control" style="width:50%">
 					<option value="nombre" disabled>Selecciona un usuario</option>
-					<option value="usuarioJalo">UsuarioJalo</option>
-					<option value="usuarioJalo2">UsuarioJalo2</option>
+					<% for(String s: contactos){ %>
+					<option value="<%=s%>"><%=s%></option>
+					<% } %>
 				</select>
                	</div>
                 	<div id="tabla" style="position:relative;max-height:550px;overflow:auto;display:block;">       
