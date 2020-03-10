@@ -1,6 +1,7 @@
 package com.jsp.servlet;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -88,8 +89,6 @@ public class Controlador extends HttpServlet {
 			break;
 		case "Borrar":
 			int id = Integer.parseInt(request.getParameter("idMensaje"));
-			//int id = Integer.parseInt(request.getContextPath());
-			//int id = Integer.parseInt(request.getPathInfo());
 			System.out.println("ID: " + id);
 			
 			u = (Usuario) sesion.getAttribute("usuario");
@@ -106,6 +105,31 @@ public class Controlador extends HttpServlet {
 				System.out.println("No ha encontrado el mensaje");
 			} 
 			
+			break;
+		case "Enviar":
+			u = (Usuario) sesion.getAttribute("usuario");
+			String contenido = request.getParameter("contenido");
+			String nombre = request.getParameter("nombre");
+			//Hay que comprobar que no esten vacíos
+			m = new Mensaje();
+			m.setEmisor(u);
+			Usuario receptor = new Usuario();
+			receptor.setNombre(nombre);
+			receptor = chat.obtenerDestinatario(receptor);
+			if(receptor!=null) {
+				m.setReceptor(receptor);
+				m.setContenido(contenido);
+				m.setFecha(new Date());
+				if(chat.enviarMensaje(m)) {
+					mostrarMensajes(request, response, true, u);
+				}
+				else {
+					System.out.println("No ha enviado el mensaje");
+				}
+			}
+			else {
+				System.out.println("No ha encontrado el usuario");
+			}
 			break;
 		}
 		
