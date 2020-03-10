@@ -134,7 +134,7 @@ public class Controlador extends HttpServlet {
 					chat.enviarMensaje(m);
 					cargarChat(request, response, false, u);
 				}
-				break;
+				
 			}
 			break;*/
 
@@ -149,27 +149,31 @@ public class Controlador extends HttpServlet {
 			String contenido = request.getParameter("contenido");
 			String nombre = request.getParameter("nombre");
 			//Hay que comprobar que no esten vac�os
-			m = new Mensaje();
-			m.setEmisor(u);
-			Usuario receptor = new Usuario();
-			receptor.setNombre(nombre);
-			receptor = chat.obtenerDestinatario(receptor);
-			if(receptor!=null) {
-				m.setReceptor(receptor);
-				m.setContenido(contenido);
-				m.setFecha(new Date());
-				if(chat.enviarMensaje(m)) {
-					//recargar usuario
-					u = chat.iniciarSesion(u);
-					cargarChat(request, response, true, u);
+			if(!contenido.isBlank() && !nombre.isBlank()) {
+				m = new Mensaje();
+				m.setEmisor(u);
+				Usuario receptor = new Usuario();
+				receptor.setNombre(nombre);
+				receptor = chat.obtenerDestinatario(receptor);
+				if(receptor!=null) {
+					m.setReceptor(receptor);
+					m.setContenido(contenido);
+					m.setFecha(new Date());
+					if(chat.enviarMensaje(m)) {
+						//recargar usuario
+						u = chat.iniciarSesion(u);
+						sesion.setAttribute("usuario", u);
+						cargarChat(request, response, true, u);
+					}
+					else {
+						System.out.println("No ha enviado el mensaje");
+					}
 				}
 				else {
-					System.out.println("No ha enviado el mensaje");
+					System.out.println("No ha encontrado el usuario");
 				}
 			}
-			else {
-				System.out.println("No ha encontrado el usuario");
-			}
+			
 			break;
 		}
 		
