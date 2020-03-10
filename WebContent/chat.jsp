@@ -48,6 +48,7 @@
     <div class="container">
       
       <div class="collapse navbar-collapse" id="navbarResponsive">
+      	<label class="nav-item" style="left:0px;font-size:2.5em;">MESSAGING WEB</label>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a class="nav-link" href="/Messaging_Web/">
@@ -56,9 +57,12 @@
           </li>
 
           <li class="nav-item active">
-            <a class="nav-link" href="#" disabled>Acceso
+            <a class="nav-link" href="#" disabled>Mensajes
             	<span class="sr-only">(current)</span>
             </a>
+          </li>
+          <li class="nav-item">
+          	<a class="nav-link" href="Controlador?accion=Perfil">Perfil</a>
           </li>
         </ul>
       </div>
@@ -67,7 +71,7 @@
   
   <div id="panel_general" style="position:relative;">
    <div id="panel_contenido" style="min-height:85vh;">
-        <h3 class="text-center text-black pt-4">Bandeja de <% if(tipo){%>SALIDA<% }else{ %>ENTRADA<% } %></h3>
+        <h3 class="text-center text-black pt-5 pb-2">Bandeja de <% if(tipo){%>SALIDA<% }else{ %>ENTRADA<% } %></h3>
         <div id="div_formulario1">
                <form id="chat"  action="Controlador" method="post">
                	<div id="menu_izquierda" class="col-lg-3" style="float:left;">
@@ -113,7 +117,7 @@
     								<td><%=m.getReceptor().getNombre()%></td>
     								<td><%=m.getContenido()%></td>
     								<td><%=m.getFecha()%></td>
-    								<td><input type="submit" formaction="Controlador?idMensaje=<%=m.getCodigo()%>" name="accion" value="Borrar"></td>
+    								<td><input class="form-control" type="submit" formaction="Controlador?idMensaje=<%=m.getCodigo()%>" name="accion" value="Borrar"></td>
     							</tr>
     							<%}%>
   							 </tbody>
