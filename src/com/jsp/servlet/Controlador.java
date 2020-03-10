@@ -97,9 +97,8 @@ public class Controlador extends HttpServlet {
 			break;
 		case "Borrar":
 			int id = Integer.parseInt(request.getParameter("idMensaje"));
-			//int id = Integer.parseInt(request.getContextPath());
 			System.out.println("ID: " + id);
-			/*
+			
 			u = (Usuario) sesion.getAttribute("usuario");
 			m = chat.existeMensaje(Integer.parseInt(request.getParameter("idMensaje")));
 			if(m!=null) {
@@ -120,22 +119,49 @@ public class Controlador extends HttpServlet {
 			u = (Usuario) sesion.getAttribute("usuario");
 			m.setContenido(request.getParameter("contenido"));
 			Usuario destino = new Usuario();
-			System.out.println("nombre: "+request.getParameter("nombre"));
 			destino.setNombre(request.getParameter("nombre"));
 			destino = chat.obtenerDestinatario(destino);
 			System.out.println("Usuario destino: "+destino.toString());
-			m.setEmisor(u);
-			m.setReceptor(destino);
-			m.setFecha(new Date());
-			System.out.println("mensaje: "+m.toString());
-			chat.enviarMensaje(m);
-			cargarChat(request, response, false, u);
+			if(destino!=null){
+				m.setEmisor(u);
+				m.setReceptor(destino);
+				m.setFecha(new Date());
+				chat.enviarMensaje(m);
+				cargarChat(request, response, false, u);
+			}
 			break;
+
 		case "Nuevo Mensaje":
 			u = (Usuario) sesion.getAttribute("usuario");
 			request.setAttribute("nombre", request.getParameter("selectNombre"));
 			System.out.println("nombre: "+request.getParameter("selectNombre"));
 			cargarChat(request, response, true, u);
+			break;
+
+		case "Enviar":
+			u = (Usuario) sesion.getAttribute("usuario");
+			String contenido = request.getParameter("contenido");
+			String nombre = request.getParameter("nombre");
+			//Hay que comprobar que no esten vac�os
+			m = new Mensaje();
+			m.setEmisor(u);
+			Usuario receptor = new Usuario();
+			receptor.setNombre(nombre);
+			receptor = chat.obtenerDestinatario(receptor);
+			if(receptor!=null) {
+				m.setReceptor(receptor);
+				m.setContenido(contenido);
+				m.setFecha(new Date());
+				if(chat.enviarMensaje(m)) {
+					cargarChat(request, response, true, u);
+				}
+				else {
+					System.out.println("No ha enviado el mensaje");
+				}
+			}
+			else {
+				System.out.println("No ha encontrado el usuario");
+			}
 			break;
 		}
 		

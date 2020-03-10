@@ -91,7 +91,7 @@
     								<td><%=m.getReceptor().getNombre()%></td>
     								<td><%=m.getContenido()%></td>
     								<td><%=m.getFecha()%></td>
-    								<td><input type="hidden" name="idMensaje" value="<%=m.getCodigo()%>"><input type="submit" name="accion" value="Borrar" class="form-control"></td>
+    								<td><input type="submit" formaction="Controlador?idMensaje=<%=m.getCodigo()%>" name="accion" value="Borrar"></td>
     							</tr>
     							<%}%>
   							 </tbody>
