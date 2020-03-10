@@ -114,29 +114,6 @@ public class Controlador extends HttpServlet {
 				System.out.println("No ha encontrado el mensaje");
 			} 
 			break;
-		
-		/*case "Enviar":
-			m = new Mensaje();
-			u = (Usuario) sesion.getAttribute("usuario");
-			String contenido = request.getParameter("contenido");
-			String nombre = request.getParameter("nombre");
-			if(!contenido.isBlank() || !nombre.isBlank()) {
-				m.setContenido(contenido);
-				Usuario destino = new Usuario();
-				destino.setNombre(nombre);
-				destino = chat.obtenerDestinatario(destino);
-				System.out.println("Usuario destino: "+destino.toString());
-				
-				if(destino!=null){
-					m.setEmisor(u);
-					m.setReceptor(destino);
-					m.setFecha(new Date());
-					chat.enviarMensaje(m);
-					cargarChat(request, response, false, u);
-				}
-				
-			}
-			break;*/
 
 		case "Nuevo Mensaje":
 			u = (Usuario) sesion.getAttribute("usuario");
@@ -172,6 +149,9 @@ public class Controlador extends HttpServlet {
 				else {
 					System.out.println("No ha encontrado el usuario");
 				}
+			}
+			else {
+				cargarChat(request, response, true, u);
 			}
 			
 			break;
