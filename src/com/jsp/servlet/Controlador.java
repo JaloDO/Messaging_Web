@@ -64,6 +64,7 @@ public class Controlador extends HttpServlet {
 		String accion = request.getParameter("accion");
 		Usuario u;
 		Mensaje m;
+		RequestDispatcher pagina = null;
 		
 		switch(accion) {
 		case "Login":
@@ -164,6 +165,42 @@ public class Controlador extends HttpServlet {
 			else {
 				System.out.println("No ha encontrado el usuario");
 			}
+			break;
+			
+		case "Perfil":
+			request.setAttribute("error", "algo");
+			pagina = request.getRequestDispatcher("modificar.jsp");
+			pagina.forward(request, response);
+			break;
+			
+		case "Modificar":
+			request.setAttribute("error", "algo");
+			u = (Usuario) sesion.getAttribute("usuario");
+			String p1 = request.getParameter("password1");
+			System.out.println(request.getParameter("password1"));
+			System.out.println(request.getParameter("password2"));
+			String p2 = request.getParameter("password2");
+			if(p1.equals(p2) && !p1.equals("")) {
+				System.out.println("p1 = p2");
+				if(!p1.equals(u.getPassword())) {
+					System.out.println("p1 != password");
+					u.setPassword(p1);
+					if(chat.modificarUsuario(u)) {
+						System.out.println("modificar contraseña");
+						sesion.setAttribute("usuario", u);
+						pagina = request.getRequestDispatcher("modificar.jsp");
+						pagina.forward(request, response);
+					}
+					else {
+						request.setAttribute("error", "Error al modificar el usuario");
+					}
+				}else {
+					request.setAttribute("error", "Error, No puede ser el mismo Password");
+				}
+			}else {request.setAttribute("error", "Error, Password no coincide");}
+			
+			pagina = request.getRequestDispatcher("modificar.jsp");
+			pagina.forward(request, response);
 			break;
 		}
 		
