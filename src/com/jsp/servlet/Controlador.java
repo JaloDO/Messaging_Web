@@ -89,8 +89,9 @@ public class Controlador extends HttpServlet {
 		case "Borrar":
 			int id = Integer.parseInt(request.getParameter("idMensaje"));
 			//int id = Integer.parseInt(request.getContextPath());
+			//int id = Integer.parseInt(request.getPathInfo());
 			System.out.println("ID: " + id);
-			/*
+			
 			u = (Usuario) sesion.getAttribute("usuario");
 			m = chat.existeMensaje(Integer.parseInt(request.getParameter("idMensaje")));
 			if(m!=null) {
@@ -103,7 +104,7 @@ public class Controlador extends HttpServlet {
 			}
 			else {
 				System.out.println("No ha encontrado el mensaje");
-			} */
+			} 
 			
 			break;
 		}

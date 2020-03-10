@@ -8,6 +8,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+
 <!-- Bootstrap core CSS -->
   <link href="https://augustobrigadaw.000webhostapp.com/resources2/bootstrap.css" rel="stylesheet">
 <!-- Custom styles for this template -->
@@ -64,7 +65,7 @@
     								<td><%=m.getReceptor().getNombre()%></td>
     								<td><%=m.getContenido()%></td>
     								<td><%=m.getFecha()%></td>
-    								<td><input type="hidden" name="idMensaje" value="<%=m.getCodigo()%>"><input type="submit" name="accion" value="Borrar" ></td>
+    								<td><input type="submit" formaction="Controlador?idMensaje=<%=m.getCodigo()%>" name="accion" value="Borrar"></td>
     							</tr>
     							<%}%>
   							 </tbody>
