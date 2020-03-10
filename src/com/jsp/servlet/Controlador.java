@@ -1,6 +1,7 @@
 package com.jsp.servlet;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -73,18 +74,26 @@ public class Controlador extends HttpServlet {
 			if(u!=null) {
 				sesion.setAttribute("usuario", u);
 				//false para recibidos, true para enviados
-				mostrarMensajes(request, response, false, u);
+				cargarChat(request, response, false, u);
 			}else {
 				System.out.println("No coje el usuario");
 			}
 			break;
 		case "Enviados":
 			u = (Usuario) sesion.getAttribute("usuario");
-			mostrarMensajes(request, response, true, u);
+			cargarChat(request, response, true, u);
 			break;
+			//creo que hay que hacer un solo cargar, y tener el atributo en el request
+			//cuando se pulsa el boton, se hace:
+			/*
+			 * boolean flag = request.getParameter("flag");
+			 * flag = !flag;
+			 * request.setAttribute("flag", flag);
+			 * y luego en el controlador se llama a cargarChat(request, response, getParameter("flag"), u);
+			 */
 		case "Recibidos":
 			u = (Usuario) sesion.getAttribute("usuario");
-			mostrarMensajes(request, response, false, u);
+			cargarChat(request, response, false, u);
 			break;
 		case "Borrar":
 			int id = Integer.parseInt(request.getParameter("idMensaje"));
@@ -104,7 +113,29 @@ public class Controlador extends HttpServlet {
 			else {
 				System.out.println("No ha encontrado el mensaje");
 			} */
-			
+			break;
+		
+		case "Enviar":
+			m = new Mensaje();
+			u = (Usuario) sesion.getAttribute("usuario");
+			m.setContenido(request.getParameter("contenido"));
+			Usuario destino = new Usuario();
+			System.out.println("nombre: "+request.getParameter("nombre"));
+			destino.setNombre(request.getParameter("nombre"));
+			destino = chat.obtenerDestinatario(destino);
+			System.out.println("Usuario destino: "+destino.toString());
+			m.setEmisor(u);
+			m.setReceptor(destino);
+			m.setFecha(new Date());
+			System.out.println("mensaje: "+m.toString());
+			chat.enviarMensaje(m);
+			cargarChat(request, response, false, u);
+			break;
+		case "Nuevo Mensaje":
+			u = (Usuario) sesion.getAttribute("usuario");
+			request.setAttribute("nombre", request.getParameter("selectNombre"));
+			System.out.println("nombre: "+request.getParameter("selectNombre"));
+			cargarChat(request, response, true, u);
 			break;
 		}
 		
@@ -119,7 +150,7 @@ public class Controlador extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	private void mostrarMensajes(HttpServletRequest request, HttpServletResponse response, Boolean tipoMensaje, Usuario usuario){
+	private void cargarChat(HttpServletRequest request, HttpServletResponse response, Boolean tipoMensaje, Usuario usuario){
 		
 		try {
 			//false para recibidos, true para enviados

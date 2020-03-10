@@ -7,13 +7,20 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Messaging Web</title>
 <!-- Bootstrap core CSS -->
   <link href="https://augustobrigadaw.000webhostapp.com/resources2/bootstrap.css" rel="stylesheet">
 <!-- Custom styles for this template -->
   <link href="https://augustobrigadaw.000webhostapp.com/resources2/css/shop-homepage.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  
+  
+  <%Boolean tipo = (Boolean) request.getAttribute("tipo");
+  	request.setAttribute("nombre","nombre");
+  	%>
 
-  <%Boolean tipo = (Boolean) request.getAttribute("tipo"); %>
 </head>
 <body style="background-color:#c9c8c5;">
 	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -39,7 +46,7 @@
   
   <div id="panel_general" style="position:relative;">
    <div id="panel_contenido" style="min-height:85vh;">
-        <h3 class="text-center text-black pt-4">Bandeja de <% if(tipo){ %>SALIDA<% }else{ %>ENTRADA<% } %></h3>
+        <h3 class="text-center text-black pt-4">Bandeja de <% if(tipo){%>SALIDA<% }else{ %>ENTRADA<% } %></h3>
         <div id="div_formulario1">
                <form id="chat"  action="Controlador" method="post">
                	<div id="menu_izquierda" class="col-lg-3" style="float:left;">
@@ -51,9 +58,15 @@
 								<input type="submit" name="accion" value="Enviados" class="btn btn-dark btn-md" style="width:50%;">
 							<% } %>
 				</div>
-				<div id="botonRedactar" class="pt-2">
+				<div id="botonRedactar" class="pt-2 pb-2">
 					<input type="submit" name="accion" value="Nuevo Mensaje" class="btn btn-light btn-md" style="width:50%;"/>
 				</div>
+				
+				<select id="selectNombre" name="selectNombre" class="form-control" style="width:50%">
+					<option value="nombre" disabled>Selecciona un usuario</option>
+					<option value="usuarioJalo">UsuarioJalo</option>
+					<option value="usuarioJalo2">UsuarioJalo2</option>
+				</select>
                	</div>
                 	<div id="tabla" style="position:relative;max-height:550px;overflow:auto;display:block;">       
                            <table class="table table-hover table-striped table-light" caption="titulo de la tabla">
@@ -78,7 +91,7 @@
     								<td><%=m.getReceptor().getNombre()%></td>
     								<td><%=m.getContenido()%></td>
     								<td><%=m.getFecha()%></td>
-    								<td><input type="hidden" name="idMensaje" value="<%=m.getCodigo()%>"><input type="submit" name="accion" value="Borrar" ></td>
+    								<td><input type="hidden" name="idMensaje" value="<%=m.getCodigo()%>"><input type="submit" name="accion" value="Borrar" class="form-control"></td>
     							</tr>
     							<%}%>
   							 </tbody>
@@ -116,7 +129,7 @@
     		<form id="mensaje" action="Controlador" method="post">
     			<div class="col-md-6" style="position:relative;left:25%;">
     				<label for="nombre" class="badge badge-light">Para:</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="desinatario" class="form-control"/>
+                    <input type="text" id="nombre" name="nombre" placeholder="nombre" value="<%=request.getParameter("selectNombre")%>" class="form-control"></input>
                     <br />
                     <label for="contenido" class="badge badge-light">Mensaje:</label>
                     <input type="text" id="contenido" name="contenido" placeholder="contenido" class="form-control"/>
