@@ -14,9 +14,12 @@
 <!-- Custom styles for this template -->
   <link href="https://augustobrigadaw.000webhostapp.com/resources2/css/shop-homepage.css" rel="stylesheet">
 
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   
   <%Boolean tipo = (Boolean) request.getAttribute("tipo");
-  	request.setAttribute("nombre","nombre");
+  	request.setAttribute("nombre","otra cosa");
   	%>
  <%
   	boolean match = false;
@@ -76,23 +79,24 @@
                <form id="chat"  action="Controlador" method="post">
                	<div id="menu_izquierda" class="col-lg-3" style="float:left;">
                	<p><b>aqui quiero hacer un div no muy grande que quede a la izquierda</b></p>
-               	<div id="botonVer">
+               	<div id="botonVer" class="pb-3">
 							<% if(tipo){ %>
 								<input type="submit" name="accion" value="Recibidos" class="btn btn-dark btn-md" style="width:50%;">
 							<% }else{ %>
 								<input type="submit" name="accion" value="Enviados" class="btn btn-dark btn-md" style="width:50%;">
 							<% } %>
 				</div>
-				<div id="botonRedactar" class="pt-2 pb-2">
-					<input type="submit" name="accion" value="Nuevo Mensaje" class="btn btn-light btn-md" style="width:50%;"/>
+				<div class="dropdown">
+  					<button class="btn btn-dark dropdown-toggle" type="submit" 
+  					id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:50%;">
+    					Contactos Recientes
+  					</button>
+  					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+  						<% for(String s: contactos) {%>
+    					<a class="dropdown-item" href="Controlador?accion=Nuevo Mensaje" name="nombre" value="<%=s%>"><%=s%></a>
+    					<% } %>
+  					</div>
 				</div>
-				
-				<select id="selectNombre" name="selectNombre" class="form-control" style="width:50%">
-					<option value="nombre" disabled>Selecciona un usuario</option>
-					<% for(String s: contactos){ %>
-					<option value="<%=s%>"><%=s%></option>
-					<% } %>
-				</select>
                	</div>
                 	<div id="tabla" style="position:relative;max-height:550px;overflow:auto;display:block;">       
                            <table class="table table-hover table-striped table-light" caption="titulo de la tabla">
@@ -155,7 +159,7 @@
     		<form id="mensaje" action="Controlador" method="post">
     			<div class="col-md-6" style="position:relative;left:25%;">
     				<label for="nombre" class="badge badge-light">Para:</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="nombre" value="<%=request.getParameter("selectNombre")%>" class="form-control"></input>
+                    <input type="text" id="nombre" name="nombre" placeholder="nombre" value="<%=request.getAttribute("nombre")%>" class="form-control"></input>
                     <br />
                     <label for="contenido" class="badge badge-light">Mensaje:</label>
                     <input type="text" id="contenido" name="contenido" placeholder="contenido" class="form-control"/>
