@@ -19,7 +19,13 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   
   <%Boolean tipo = (Boolean) request.getAttribute("tipo");
-  	request.setAttribute("nombre","nombre");
+  	if(request.getAttribute("contacto")!=null){
+  		request.setAttribute("nombre",request.getAttribute("contacto"));
+  	}
+  	else{
+  		request.setAttribute("nombre","Nombre");
+  	}
+  	
   	%>
  <%
   	boolean match = false;
@@ -92,7 +98,7 @@
   					</button>
   					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
   						<% for(String s: contactos) {%>
-    					<a class="dropdown-item" href="Controlador?accion=Nuevo Mensaje" name="nombre" value="<%=s%>"><%=s%></a>
+    					<a class="dropdown-item" href="Controlador?accion=meterContacto&contacto=<%=s%>" ><%=s%></a>
     					<% } %>
   					</div>
 				</div>
