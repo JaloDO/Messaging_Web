@@ -98,7 +98,7 @@
   					</button>
   					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
   						<% for(String s: contactos) {%>
-    					<a class="dropdown-item" href="Controlador?accion=meterContacto&contacto=<%=s%>" ><%=s%></a>
+    					<a class="dropdown-item" href="Controlador?accion=meterContacto&contacto=<%=s%>&tipo=<%=tipo%>" ><%=s%></a>
     					<% } %>
   					</div>
 				</div>

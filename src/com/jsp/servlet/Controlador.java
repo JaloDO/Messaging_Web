@@ -116,6 +116,7 @@ public class Controlador extends HttpServlet {
 				System.out.println("No ha encontrado el mensaje");
 				request.setAttribute("error2", "Error al borrar mensaje");
 			}
+			request.setAttribute("tipo", true);
 			cargarChat(request, response, u);
 			break;
 
@@ -238,8 +239,9 @@ public class Controlador extends HttpServlet {
 			pagina = request.getRequestDispatcher(url);
 			pagina.forward(request, response);
 			break;
-		case "meterContacto":
+		case "meterContacto":			
 			u =(Usuario) sesion.getAttribute("usuario");
+			request.setAttribute("tipo",Boolean.parseBoolean(request.getParameter("tipo")));
 			request.setAttribute("contacto", request.getParameter("contacto"));
 			cargarChat(request, response, u);
 			break;
