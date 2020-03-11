@@ -26,7 +26,7 @@ public class Controlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private Conector chat;
-	
+	boolean tipo = false;
 	
        
     @Override
@@ -65,6 +65,7 @@ public class Controlador extends HttpServlet {
 		Usuario u;
 		Mensaje m;
 		RequestDispatcher pagina = null;
+		request.setAttribute("tipo", tipo);
 		
 		switch(accion) {
 		case "Login":
@@ -76,30 +77,26 @@ public class Controlador extends HttpServlet {
 				sesion.setAttribute("usuario", u);
 				request.setAttribute("usuario", u);
 				//false para recibidos, true para enviados
-				cargarChat(request, response, false, u);
+				cargarChat(request, response, u);
 			}else {
-				request.setAttribute("error", "Datos de inicio de sesión incorrectos");
+				request.setAttribute("error", "Datos de inicio de sesiï¿½n incorrectos");
 				System.out.println("No coje el usuario");
 				pagina = request.getRequestDispatcher("index.jsp");
 				pagina.forward(request, response);
 			}
 			break;
-		case "Enviados":
+			
+		case "Ver Enviados":
 			u = (Usuario) sesion.getAttribute("usuario");
-			cargarChat(request, response, true, u);
+			request.setAttribute("tipo", true);
+			cargarChat(request, response, u);
 			break;
-			//creo que hay que hacer un solo cargar, y tener el atributo en el request
-			//cuando se pulsa el boton, se hace:
-			/*
-			 * boolean flag = request.getParameter("flag");
-			 * flag = !flag;
-			 * request.setAttribute("flag", flag);
-			 * y luego en el controlador se llama a cargarChat(request, response, getParameter("flag"), u);
-			 */
-		case "Recibidos":
+		case "Ver Recibidos":
 			u = (Usuario) sesion.getAttribute("usuario");
-			cargarChat(request, response, false, u);
+			request.setAttribute("tipo", false);
+			cargarChat(request, response, u);
 			break;
+			
 		case "Borrar":
 			int id = Integer.parseInt(request.getParameter("idMensaje"));
 			System.out.println("ID: " + id);
@@ -119,14 +116,14 @@ public class Controlador extends HttpServlet {
 				System.out.println("No ha encontrado el mensaje");
 				request.setAttribute("error2", "Error al borrar mensaje");
 			}
-			cargarChat(request, response, true, u);
+			cargarChat(request, response, u);
 			break;
 
 		case "Nuevo Mensaje":
 			u = (Usuario) sesion.getAttribute("usuario");
 			System.out.println("nombre: "+request.getParameter("nombre"));
 			request.setAttribute("nombre", request.getParameter("nombre"));
-			cargarChat(request, response, true, u);
+			cargarChat(request, response, u);
 			break;
 
 		case "Enviar":
@@ -134,7 +131,7 @@ public class Controlador extends HttpServlet {
 			String contenido = request.getParameter("contenido");
 			String nombre = request.getParameter("nombre");
 			//Hay que comprobar que no esten vacï¿½os
-			if(!contenido.isBlank() && !nombre.isBlank()) {
+			if(!contenido.equals("") && !nombre.equals("")) {
 				m = new Mensaje();
 				m.setEmisor(u);
 				Usuario receptor = new Usuario();
@@ -161,18 +158,21 @@ public class Controlador extends HttpServlet {
 			}
 			else {
 				System.out.println("Campos vacios");
-				request.setAttribute("error", "No puede haber campos vacíos");
+				request.setAttribute("error", "No puede haber campos vacï¿½os");
 			}
-			cargarChat(request, response, true, u);
+			request.setAttribute("tipo", true);
+			cargarChat(request, response, u);
 			
 			break;
 			
 		case "Perfil":
+			request.setAttribute("error", "");
 			pagina = request.getRequestDispatcher("modificar.jsp");
 			pagina.forward(request, response);
 			break;
 			
 		case "Modificar":
+			request.setAttribute("error", "");
 			u = (Usuario) sesion.getAttribute("usuario");
 			String p1 = request.getParameter("password1");
 			System.out.println(request.getParameter("password1"));
@@ -184,11 +184,9 @@ public class Controlador extends HttpServlet {
 					System.out.println("p1 != password");
 					u.setPassword(p1);
 					if(chat.modificarUsuario(u)) {
-						System.out.println("modificar contraseña");
+						System.out.println("modificar contraseï¿½a");
 						u = chat.iniciarSesion(u);
 						sesion.setAttribute("usuario", u);
-						//pagina = request.getRequestDispatcher("modificar.jsp");
-						//pagina.forward(request, response);
 					}
 					else {
 						request.setAttribute("error", "Error al modificar el usuario");
@@ -235,7 +233,7 @@ public class Controlador extends HttpServlet {
 				}
 			}
 			else {
-				request.setAttribute("error", "Error, No puede haber campos vacíos");
+				request.setAttribute("error", "Error, No puede haber campos vacï¿½os");
 			}
 			pagina = request.getRequestDispatcher(url);
 			pagina.forward(request, response);
@@ -253,11 +251,12 @@ public class Controlador extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	private void cargarChat(HttpServletRequest request, HttpServletResponse response, Boolean tipoMensaje, Usuario usuario){
+	private void cargarChat(HttpServletRequest request, HttpServletResponse response, Usuario usuario){
 		
 		try {
 			//false para recibidos, true para enviados
 			List<Mensaje> mensajes;
+			boolean tipoMensaje = (boolean) request.getAttribute("tipo");
 			if(tipoMensaje) {
 				mensajes = chat.mensajesEnviados(usuario);
 			}
