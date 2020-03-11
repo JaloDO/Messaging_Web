@@ -65,7 +65,7 @@ public class Controlador extends HttpServlet {
 		Mensaje m;
 		RequestDispatcher pagina = null;
 		request.setAttribute("tipo", false);
-		request.setAttribute("oculto", false);
+		request.setAttribute("oculto", true);
 		
 		switch(accion) {
 		case "Login":
@@ -248,6 +248,7 @@ public class Controlador extends HttpServlet {
 			break;
 		case "meterContacto":			
 			u =(Usuario) sesion.getAttribute("usuario");
+			request.setAttribute("oculto", false);
 			request.setAttribute("tipo",Boolean.parseBoolean(request.getParameter("tipo")));
 			request.setAttribute("contacto", request.getParameter("contacto"));
 			cargarChat(request, response, u);
