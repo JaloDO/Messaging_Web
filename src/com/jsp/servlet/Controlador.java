@@ -79,7 +79,7 @@ public class Controlador extends HttpServlet {
 				//false para recibidos, true para enviados
 				cargarChat(request, response, u);
 			}else {
-				request.setAttribute("error", "Datos de inicio de sesión incorrectos");
+				request.setAttribute("error", "Datos de inicio de sesiï¿½n incorrectos");
 				System.out.println("No coje el usuario");
 				pagina = request.getRequestDispatcher("index.jsp");
 				pagina.forward(request, response);
@@ -159,7 +159,7 @@ public class Controlador extends HttpServlet {
 			}
 			else {
 				System.out.println("Campos vacios");
-				request.setAttribute("error", "No puede haber campos vacíos");
+				request.setAttribute("error", "No puede haber campos vacï¿½os");
 			}
 			request.setAttribute("tipo", true);
 			cargarChat(request, response, u);
@@ -185,7 +185,7 @@ public class Controlador extends HttpServlet {
 					System.out.println("p1 != password");
 					u.setPassword(p1);
 					if(chat.modificarUsuario(u)) {
-						System.out.println("modificar contraseña");
+						System.out.println("modificar contraseï¿½a");
 						u = chat.iniciarSesion(u);
 						sesion.setAttribute("usuario", u);
 					}
@@ -205,6 +205,45 @@ public class Controlador extends HttpServlet {
 			u = (Usuario) sesion.getAttribute("usuario");
 			request.setAttribute("oculto", true);
 			cargarChat(request, response, u);
+			
+		case "registro":
+			pagina = request.getRequestDispatcher("registrar.jsp");
+			pagina.forward(request, response);
+			break;
+		case "Registrarse":
+			u = new Usuario();
+			String url = "registrar.jsp";
+			String name = request.getParameter("username");
+			String pass1 = request.getParameter("password1");
+			System.out.println(request.getParameter("password1"));
+			System.out.println(request.getParameter("password2"));
+			String pass2 = request.getParameter("password2");
+			if(!name.equals("") && !pass1.equals("")) {
+				if(pass1.equals(pass2) ) {
+					System.out.println("p1 = p2");
+					u.setNombre(name);
+					u.setPassword(pass1);
+					if(!chat.existeUsername(u)) {
+						if(chat.registrarUsuario(u)) {
+							url = "index.jsp";
+						}
+						else {
+							request.setAttribute("error", "Error al registrar el usuario");
+						}	
+					}
+					else {
+						request.setAttribute("error", "El nombre de usuario ya existe, introduce otro");
+					}
+					
+				}else {
+					request.setAttribute("error", "Error, Password no coincide");
+				}
+			}
+			else {
+				request.setAttribute("error", "Error, No puede haber campos vacï¿½os");
+			}
+			pagina = request.getRequestDispatcher(url);
+			pagina.forward(request, response);
 			break;
 		}
 		
