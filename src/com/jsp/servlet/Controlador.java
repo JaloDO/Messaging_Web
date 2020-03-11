@@ -245,6 +245,11 @@ public class Controlador extends HttpServlet {
 			pagina = request.getRequestDispatcher(url);
 			pagina.forward(request, response);
 			break;
+		case "meterContacto":
+			u =(Usuario) sesion.getAttribute("usuario");
+			request.setAttribute("contacto", request.getParameter("contacto"));
+			cargarChat(request, response, u);
+			break;
 		}
 		
 		
