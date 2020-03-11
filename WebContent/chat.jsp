@@ -18,19 +18,24 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   
-  <%Boolean tipo = (Boolean) request.getAttribute("tipo");
+  <% Boolean tipo = (Boolean) request.getAttribute("tipo");
   	if(request.getAttribute("contacto")!=null){
-  		request.setAttribute("nombre",request.getAttribute("contacto"));
+  		if(request.getAttribute("contacto").equals("Nuevo")){
+  	  		request.setAttribute("nombre","");
+  	  	}
+  	  	else{
+  	  		request.setAttribute("nombre",request.getAttribute("contacto"));
+  	  	}
   	}
   	else{
-  		request.setAttribute("nombre","Nombre");
+  		request.setAttribute("nombre","");
   	}
   	
   	%>
  <%
   	boolean match = false;
  	List<String>contactos = new ArrayList<String>();
-
+	contactos.add("Nuevo");
   	Usuario user = (Usuario) session.getAttribute("usuario");
   	List<Mensaje>enviados = user.getEnviados();
   	for (Mensaje m: enviados){

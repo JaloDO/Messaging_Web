@@ -142,16 +142,19 @@ public class Controlador extends HttpServlet {
 					}
 					else {
 						System.out.println("No ha enviado el mensaje");
+						request.setAttribute("oculto", false);
 						request.setAttribute("error", "Error al enviar mensaje");
 					}
 				}
 				else {
 					System.out.println("No ha encontrado el usuario");
+					request.setAttribute("oculto", false);
 					request.setAttribute("error", "No se ha encontrado el usuario");
 				}
 			}
 			else {
 				System.out.println("Campos vacios");
+				request.setAttribute("oculto", false);
 				request.setAttribute("error", "No puede haber campos vacï¿½os");
 			}
 			request.setAttribute("tipo", true);
@@ -181,6 +184,7 @@ public class Controlador extends HttpServlet {
 						System.out.println("modificar contraseï¿½a");
 						u = chat.iniciarSesion(u);
 						sesion.setAttribute("usuario", u);
+						request.setAttribute("error", "Contraseña modificada");
 					}
 					else {
 						request.setAttribute("error", "Error al modificar el usuario");
@@ -198,7 +202,7 @@ public class Controlador extends HttpServlet {
 			u = (Usuario) sesion.getAttribute("usuario");
 			request.setAttribute("oculto", true);
 			cargarChat(request, response, u);
-			
+			break;
 		case "registro":
 			pagina = request.getRequestDispatcher("registrar.jsp");
 			pagina.forward(request, response);
