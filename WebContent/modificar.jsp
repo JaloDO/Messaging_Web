@@ -11,7 +11,7 @@
 <!-- Custom styles for this template -->
   <link href="https://augustobrigadaw.000webhostapp.com/resources2/css/shop-homepage.css" rel="stylesheet">
 
-
+<% boolean tipo = (boolean) request.getAttribute("tipo"); %>
 </head>
 
 
@@ -23,7 +23,11 @@
       	<label class="nav-item" style="left:0px;font-size:2.5em;">MESSAGING WEB</label>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="Controlador?accion=Enviados">
+          	<%if(!tipo){%>
+            <a class="nav-link" href="Controlador?accion=Ver Enviados">
+            <% }else{ %>
+            <a class="nav-link" href="Controlador?accion=Ver Recibidos">
+            <% } %>
             	<img src="https://www.nicepng.com/png/full/266-2660273_expand-slideshow-white-back-icon-png.png" width="20" height="30"/>
             </a>
           </li>

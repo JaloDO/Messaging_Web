@@ -19,7 +19,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   
   <%Boolean tipo = (Boolean) request.getAttribute("tipo");
-  	request.setAttribute("nombre","otra cosa");
+  	request.setAttribute("nombre","nombre");
   	%>
  <%
   	boolean match = false;
@@ -78,17 +78,16 @@
         <div id="div_formulario1">
                <form id="chat"  action="Controlador" method="post">
                	<div id="menu_izquierda" class="col-lg-3" style="float:left;">
-               	<p><b>aqui quiero hacer un div no muy grande que quede a la izquierda</b></p>
                	<div id="botonVer" class="pb-3">
 							<% if(tipo){ %>
-								<input type="submit" name="accion" value="Recibidos" class="btn btn-dark btn-md" style="width:50%;">
+								<input type="submit" name="accion" value="Ver Recibidos" class="btn btn-dark btn-md" style="width:50%;">
 							<% }else{ %>
-								<input type="submit" name="accion" value="Enviados" class="btn btn-dark btn-md" style="width:50%;">
+								<input type="submit" name="accion" value="Ver Enviados" class="btn btn-dark btn-md" style="width:50%;">
 							<% } %>
 				</div>
 				<div class="dropdown">
   					<button class="btn btn-dark dropdown-toggle" type="submit" 
-  					id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:50%;">
+  					id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:60%;">
     					Contactos Recientes
   					</button>
   					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
