@@ -164,9 +164,9 @@
             </form> 
         </div>
         <%if ((boolean)request.getAttribute("oculto")){ %>
-    	<div id="div_formulario2" class="align-content-center pt-5 pb-4" style="visibility:hidden">
+    	<div id="div_formulario2" class="align-content-center pt-5 pb-4" style="visibility:hidden;background-color:#7780a6">
     	<% }else{ %>
-    	<div id="div_formulario2" class="align-content-center pt-5 pb-4" style="visibility:visible">
+    	<div id="div_formulario2" class="align-content-center pt-5 pb-4" style="visibility:visible;background-color:#7780a6">
     	<% } %>
     		<form id="mensaje" action="Controlador" method="post">
     			<div class="col-md-6" style="position:relative;left:25%;">
