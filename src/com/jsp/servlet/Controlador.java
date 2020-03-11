@@ -120,14 +120,6 @@ public class Controlador extends HttpServlet {
 			cargarChat(request, response, u);
 			break;
 
-		case "Nuevo Mensaje":
-			u = (Usuario) sesion.getAttribute("usuario");
-			request.setAttribute("oculto", false);
-			System.out.println("nombre: "+request.getParameter("nombre"));
-			request.setAttribute("nombre", request.getParameter("nombre"));
-			cargarChat(request, response, u);
-			break;
-
 		case "Enviar":
 			u = (Usuario) sesion.getAttribute("usuario");
 			String contenido = request.getParameter("contenido");
