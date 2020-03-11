@@ -94,7 +94,7 @@
 				<div class="dropdown">
   					<button class="btn btn-dark dropdown-toggle" type="submit" 
   					id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:60%;">
-    					Contactos Recientes
+    					Nuevo Mensaje
   					</button>
   					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
   						<% for(String s: contactos) {%>
@@ -163,7 +163,11 @@
 								
             </form> 
         </div>
-    	<div id="div_formulario2" class="align-content-center pt-5 pb-4">
+        <%if ((boolean)request.getAttribute("oculto")){ %>
+    	<div id="div_formulario2" class="align-content-center pt-5 pb-4" style="visibility:hidden">
+    	<% }else{ %>
+    	<div id="div_formulario2" class="align-content-center pt-5 pb-4" style="visibility:visible">
+    	<% } %>
     		<form id="mensaje" action="Controlador" method="post">
     			<div class="col-md-6" style="position:relative;left:25%;">
     				<label for="nombre" class="badge badge-light">Para:</label>
@@ -176,7 +180,7 @@
                             	<label style="color:red" ><%=request.getAttribute("error") %></label>
                             	<% } %>
     				<input type="submit" name="accion" value="Enviar" class="btn btn-light btn-sm" >
-    				<button type="button" class="close" aria-label="Close">
+    				<button type="submit" class="close" name="accion" value="ocultarForm" aria-label="Close">
   						<span aria-hidden="true">&times;</span>
 					</button>
     			</div>

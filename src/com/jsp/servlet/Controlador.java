@@ -26,7 +26,6 @@ public class Controlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private Conector chat;
-	boolean tipo = false;
 	
        
     @Override
@@ -65,7 +64,8 @@ public class Controlador extends HttpServlet {
 		Usuario u;
 		Mensaje m;
 		RequestDispatcher pagina = null;
-		request.setAttribute("tipo", tipo);
+		request.setAttribute("tipo", false);
+		request.setAttribute("oculto", false);
 		
 		switch(accion) {
 		case "Login":
@@ -122,6 +122,7 @@ public class Controlador extends HttpServlet {
 
 		case "Nuevo Mensaje":
 			u = (Usuario) sesion.getAttribute("usuario");
+			request.setAttribute("oculto", false);
 			System.out.println("nombre: "+request.getParameter("nombre"));
 			request.setAttribute("nombre", request.getParameter("nombre"));
 			cargarChat(request, response, u);
@@ -200,6 +201,12 @@ public class Controlador extends HttpServlet {
 			pagina = request.getRequestDispatcher("modificar.jsp");
 			pagina.forward(request, response);
 			break;
+			
+		case "ocultarForm":
+			u = (Usuario) sesion.getAttribute("usuario");
+			request.setAttribute("oculto", true);
+			cargarChat(request, response, u);
+			
 		case "registro":
 			pagina = request.getRequestDispatcher("registrar.jsp");
 			pagina.forward(request, response);
